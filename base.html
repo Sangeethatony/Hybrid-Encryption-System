@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hybrid Image Encryption</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav">
+                    <li><a id="len1" class="hoverable" href="{{ url_for('home')}}">Home</a></li>
+                    <li><a id="len2" class="hoverable" href="{{ url_for('generate_rsa_keys') }}">Generate-Rsa-keys</a></li>
+                    <li><a id="len3" class="hoverable" href="{{ url_for('encrypt') }}">Encrypt-Image</a></li>
+                    <li><a id="len4" class="hoverable" href="{{ url_for('decrypt') }}">Decrypt-Image</a></li>
+                </ul>
+            </div>
+        </nav>
+        {% block content %}{% endblock %}
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+    .hoverable {
+        display: inline-block;
+        backface-visibility: hidden;
+        vertical-align: middle;
+        position: relative;
+        box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+        transform: translateZ(0);
+        transition-duration: 0.3s;
+        transition-property: transform;
+    }
+
+    .hoverable:before {
+        position: absolute;
+        pointer-events: none;
+        z-index: -1;
+        content: '';
+        top: 100%;
+        left: 5%;
+        height: 10px;
+        width: 90%;
+        opacity: 0;
+        background: -webkit-radial-gradient(
+            center,
+            ellipse,
+            rgba(255, 255, 255, 0.35) 0%,
+            rgba(255, 255, 255, 0) 80%
+        );
+        background: radial-gradient(
+            ellipse at center,
+            rgba(255, 255, 255, 0.35) 0%,
+            rgba(255, 255, 255, 0) 80%
+        );
+        transition-duration: 0.3s;
+        transition-property: transform, opacity;
+    }
+
+    .hoverable:hover,
+    .hoverable:active,
+    .hoverable:focus {
+        transform: translateY(-5px);
+    }
+
+    .hoverable:hover:before,
+    .hoverable:active:before,
+    .hoverable:focus:before {
+        opacity: 1;
+        transform: translateY(-5px);
+    }
+
+    @keyframes bounce-animation {
+        16.65% {
+            -webkit-transform: translateY(8px);
+            transform: translateY(8px);
+        }
+        33.3% {
+            -webkit-transform: translateY(-6px);
+            transform: translateY(-6px);
+        }
+        49.95% {
+            -webkit-transform: translateY(4px);
+            transform: translateY(4px);
+        }
+        66.6% {
+            -webkit-transform: translateY(-2px);
+            transform: translateY(-2px);
+        }
+        83.25% {
+            -webkit-transform: translateY(1px);
+            transform: translateY(1px);
+        }
+        100% {
+            -webkit-transform: translateY(0);
+            transform: translateY(0);
+        }
+    }
+
+    .bounce {
+        animation-name: bounce-animation;
+        animation-duration: 2s;
+    }
+
+    @media (min-width: 768px) {
+    .navbar {
+        text-align: center !important;
+        float: none;
+        display: inline-block;
+    }
+    }
+
+    body {
+        background-color: rgba(0, 0, 0, 1);
+        font-weight: 600;
+        text-align: center !important;
+        color: white;
+    }
+
+    nav {
+        background: none !important;
+        text-transform: uppercase;
+    }
+
+    nav li {
+        margin-left: 3em;
+        margin-right: 3em;
+    }
+
+    nav li a {
+        transition: 0.5s color ease-in-out;
+    }
+
+    .page-title {
+        opacity: 0.75 !important;
+    }
+    select {
+        color: #000; /* Set the desired font color, e.g., black */
+    }
+    form input,
+        form textarea,
+        form select {
+            color: #000; /* Set the desired font color, e.g., black */
+        }
+
+    .file-input-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px 0;
+        }
+        
+    </style>
+    <script>
+            $(function(){
+        var str = '#len'; //increment by 1 up to 1-nelemnts
+        $(document).ready(function(){
+            var i, stop;
+            i = 1;
+            stop = 4; //num elements
+            setInterval(function(){
+            if (i > stop){
+                return;
+            }
+            $('#len'+(i++)).toggleClass('bounce');
+            }, 500)
+        });
+        });
+    </script>
+</body>
+</html>

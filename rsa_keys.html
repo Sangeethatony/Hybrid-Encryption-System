@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>RSA Keys Generated</h2>
+    <h3>Private Key</h3>
+    <textarea style="color: black;" rows="10" cols="50" readonly>{{ private_key }}</textarea>
+    <br><br>
+    <h3>Public Key</h3>
+    <textarea style="color: black;" rows="10" cols="50" readonly>{{ public_key }}</textarea>
+    <br><br>
+    <a href="/">Back to Home</a>
+{% endblock %}

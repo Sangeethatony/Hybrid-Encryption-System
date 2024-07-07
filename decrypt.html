@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Decrypt Image</h1>
+
+    <p>Please select the decryption algorithm:</p>
+    <select id="algorithm-select">
+        <option value="S" {% if not algorithm %}selected{% endif %}>Select</option>
+        <option value="aes">AES</option>
+        <option value="hybrid">Hybrid</option>
+    </select>
+
+    <div id="passphrase-section" style="display: none;">
+        <p>Please enter your passphrase:</p>
+        <form method="POST" action="{{ url_for('decrypt') }}" enctype="multipart/form-data">
+            <input type="hidden" name="algorithm" id="algorithm-input" value="aes">
+            <input type="password" name="passphrase" required>
+            <br>
+            <div class="file-input-container">
+                <input style="color: white;" type="file" name="encrypted_image" required>
+            </div>
+            <br>
+            <input type="submit" value="Decrypt">
+        </form>
+    </div>
+
+    <div id="rsa-key-section" style="display: none;">
+        <p>Please enter your RSA private key and the encrypted AES key:</p>
+        <form method="POST" action="{{ url_for('decrypt') }}" enctype="multipart/form-data">
+            <input type="hidden" name="algorithm" id="algorithm-input" value="hybrid">
+            <label for="rsa_private_key">RSA Key:</label>
+            <textarea id="rsa_private_key" name="rsa_private_key" required></textarea>
+            <br>
+            <label for="encrypted_aes_key">AES Key:</label>
+            <textarea id="encrypted_aes_key" name="encrypted_aes_key" required></textarea>
+            <br>
+            <div class="file-input-container">
+                <input style="color: white;" type="file" name="encrypted_image" required>
+            </div>
+            <br>
+            <input type="submit" value="Decrypt">
+        </form>
+    </div>
+
+    <script>
+        const algorithmSelect = document.getElementById('algorithm-select');
+        const passphraseSection = document.getElementById('passphrase-section');
+        const rsaKeySection = document.getElementById('rsa-key-section');
+        const algorithmInput = document.getElementById('algorithm-input');
+
+        algorithmSelect.addEventListener('change', function() {
+            algorithmInput.value = algorithmSelect.value;
+            if (algorithmSelect.value === 'aes') {
+                passphraseSection.style.display = 'block';
+                rsaKeySection.style.display = 'none';
+            } else if (algorithmSelect.value === 'hybrid') {
+                passphraseSection.style.display = 'none';
+                rsaKeySection.style.display = 'block';
+            }else if(algorithmSelect.value === 'S'){
+                passphraseSection.style.display = 'none';
+                rsaKeySection.style.display = 'none';
+            }
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Image Encryption Successful</h2>
+    <h3>AES Key:</h3>
+    <textarea style="color: black;" rows="3" cols="50" readonly>{{ aes_key }}</textarea>
+    <br><br>
+    <form method="POST" action="{{ url_for('download_encrypted_image') }}">
+        <input type="hidden" name="encrypted_aes_key" value="{{ aes_key }}">
+        <input type="hidden" name="encrypted_image" value="{{ encrypted_image }}">
+        <input type="submit" value="Download Encrypted Image">
+    </form>
+    <br><br>
+    <a href="/">Back to Home</a>
+{% endblock %}

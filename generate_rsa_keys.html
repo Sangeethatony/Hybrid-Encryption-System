@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Generate RSA Key</h1>
+    <p>Click the button below to generate your RSA key pair:</p>
+    <form method="POST" action="{{ url_for('generate_rsa_keys') }}">
+        <input type="submit" style="color: black;" value="Generate Key">
+    </form>
+{% endblock %}
